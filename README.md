@@ -16,11 +16,13 @@ Asynchronous Communication
 
 Implemented using Apache Kafka for producer–consumer messaging.
 
-Demonstrates decoupled service communication with high scalability.
+Implemented using Spring Application Events (ApplicationEventPublisher + @EventListener) for in-process async communication.
 
 Best Practices Followed
 
 DTOs for request/response payloads.
+
+Event-driven design with Spring events and Kafka.
 
 Exception handling with custom exceptions.
 
@@ -44,6 +46,8 @@ Feign Client
 
 RestTemplate
 
+Spring Application Events
+
 Lombok
 
 MapStruct
@@ -55,9 +59,11 @@ Docker (for Kafka broker setup)
 🔹 Synchronous (Request/Response)
 
 RestTemplate – Traditional HTTP client for inter-service calls.
+
 Feign Client – Declarative HTTP client that simplifies communication between services.
 
 🔹 Asynchronous (Event-driven)
 
-Kafka Producer – Publishes events to Kafka topics.
-Kafka Consumer – Subscribes and processes events asynchronously.
+Kafka Producer/Consumer – For inter-service async communication.
+
+Spring Application Events – For in-process async communication inside a service.
