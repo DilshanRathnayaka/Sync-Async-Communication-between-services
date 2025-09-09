@@ -31,6 +31,7 @@ MapStruct
 Docker (for Kafka broker setup)
 
 ⚡ Communication Types
+
 🔹 Synchronous (Request/Response)
 
 RestTemplate – Traditional HTTP client for inter-service calls.
