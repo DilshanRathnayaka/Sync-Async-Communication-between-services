@@ -2,6 +2,7 @@ package com.communication.communication.service.impl;
 
 import com.communication.communication.config.KafkaConfig;
 import com.communication.communication.dto.UserDTO;
+import com.communication.communication.events.UserEvent;
 import com.communication.communication.exception.UserException;
 import com.communication.communication.mapper.UserMapper;
 import com.communication.communication.model.User;
@@ -10,6 +11,7 @@ import com.communication.communication.service.UserService;
 import com.communication.communication.service.helper.ProducerService;
 import com.communication.communication.utill.Step;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,6 +24,7 @@ public class UserServiceImpl implements UserService {
     private final UserRepo userRepo;
     private final UserMapper userMapper;
     private final ProducerService producerService;
+    private final ApplicationEventPublisher applicationEventPublisher;
 
     public UserDTO saveUser(UserDTO userDTO) {
         try{
@@ -32,6 +35,7 @@ public class UserServiceImpl implements UserService {
             }
             if(user.getStepType().equals(Step.APPROVED)){
                 producerService.sendMessage(KafkaConfig.TOPIC, user.toString());
+                applicationEventPublisher.publishEvent(new UserEvent(user.getId()));
             }
             return userMapper.entityToUserDTO(userRepo.save(user));
         }catch (Exception ex){
